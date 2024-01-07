@@ -33,7 +33,7 @@
 
             <div class="mb-3">
                 <label for="mobno" class="form-label">Mob No.:</label>
-                <input type="number" class="form-control" name="mobno" value="{{ user[4] }}" required>
+                <input type="tel" class="form-control" name="mobno" value="{{ user[4] }}" required pattern="[0-9]{10}" title="Please enter a 10-digit phone number">
             </div>
 
             <button type="submit" class="btn btn-success">Update User</button>

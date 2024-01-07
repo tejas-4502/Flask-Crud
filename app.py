@@ -16,7 +16,7 @@ def init_db():
             name TEXT NOT NULL,
             age TEXT NOT NULL,
             email TEXT NOT NULL,
-            mobno TEXT NOT NULL
+            mobno TEXT NOT NULL 
         )
     ''')
  
@@ -38,13 +38,13 @@ def add_user():
         name = request.form['name']
         age = request.form['age']
         email = request.form['email']
-        mobno = request.form['mobno']
+        mobno = str(request.form['mobno'])
  
         conn = sqlite3.connect('user.db')
         cursor = conn.cursor()
  
         # Insert data
-        cursor.execute('INSERT INTO user (name, age, email, mobno) VALUES (?, ?, ?, ?)', (name, age, email, mobno))
+        cursor.execute('INSERT INTO user (name, age, email, mobno) VALUES (?, ?, ?, ?)', (name, age, email, str(mobno)))
  
         conn.commit()
         conn.close()
@@ -58,14 +58,23 @@ def add_user():
 def get_users():
     conn = sqlite3.connect('user.db')
     cursor = conn.cursor()
- 
-    # Fetch all data
-    cursor.execute('SELECT * FROM user')
+
+    cursor.execute('SELECT COUNT(*) FROM user')
+    total_users = cursor.fetchone()[0]
+
+    page = request.args.get('page', 1, type=int)  
+    per_page = 5  
+    offset = (page - 1) * per_page
+
+    cursor.execute('SELECT * FROM user LIMIT ? OFFSET ?', (per_page, offset))
     users = cursor.fetchall()
- 
+
+    total_pages = (total_users + per_page - 1) // per_page  
+
     conn.close()
- 
-    return render_template('users.html', users=users)
+
+    return render_template('users.html', users=users, page=page, total_pages=total_pages)
+
  
 # Update
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
