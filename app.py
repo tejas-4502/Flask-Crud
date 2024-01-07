@@ -25,6 +25,11 @@ def init_db():
  
 # database
 init_db()
+
+# nav base
+@app.route('/')
+def login():
+    return render_template('index.html')
  
 # Create
 @app.route('/add', methods=['GET', 'POST'])
@@ -49,7 +54,7 @@ def add_user():
     return render_template('add.html')
  
 # Read
-@app.route('/')
+@app.route('/users')
 def get_users():
     conn = sqlite3.connect('user.db')
     cursor = conn.cursor()

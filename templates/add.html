@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    {% include 'navbar.html' %}
     <div class="container mt-4">
         <h1>Add User</h1>
         <form method="post">
@@ -20,7 +21,7 @@
 
             <div class="mb-3">
                 <label for="age" class="form-label">Age:</label>
-                <input type="text" class="form-control" name="age" required>
+                <input type="number" class="form-control" name="age" required>
             </div>
 
             <div class="mb-3">
@@ -30,7 +31,7 @@
 
             <div class="mb-3">
                 <label for="mobno" class="form-label">Mob No.:</label>
-                <input type="text" class="form-control" name="mobno" required>
+                <input type="number" class="form-control" name="mobno" required>
             </div>
 
             <button type="submit" class="btn btn-success">Add User</button>
